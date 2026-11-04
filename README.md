@@ -1,391 +1,639 @@
-# 🌐 NetSim: Smart Campus Network Design & Simulation System
+# NetSim – Smart Campus Network Simulator
 
-[![React](https://img.shields.io/badge/React-19.0-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Tests](https://img.shields.io/badge/Tests-34%20Passing-brightgreen?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev/)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+<p align="center">
+  <strong>An Interactive Computer Networks Simulation Platform</strong>
+  <br />
+  Learn, visualize, simulate, and troubleshoot a smart campus network.
+</p>
 
-An interactive, browser-based **Smart Campus Network Architecture & Simulation** platform developed for Computer Networks Project-Based Learning (PBL). 
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 19" />
+  <img src="https://img.shields.io/badge/Vite-6-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 6" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-v4-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/Vitest-34_Tests-6E9F18?style=for-the-badge&logo=vitest&logoColor=white" alt="Vitest" />
+</p>
 
-NetSim models a full-scale hierarchical college campus network — featuring **VLAN segmentation, Router-on-a-Stick inter-VLAN routing, DHCP DORA exchange, Campus DNS, NAT/PAT translation, Extended Access Control Lists (ACLs), OSI layer-by-layer packet flow tracing, and a fault-injection troubleshooting lab with verified Cisco IOS configurations**.
-
----
-
-## 📌 Table of Contents
-
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-- [Campus Network Architecture](#-campus-network-architecture)
-  - [Logical VLAN & Subnet Design](#logical-vlan--subnet-design)
-  - [Hardware & Device Inventory](#hardware--device-inventory)
-- [Core Technologies & Network Protocols](#-core-technologies--network-protocols)
-  - [1. VLAN Segmentation & 802.1Q Trunking](#1-vlan-segmentation--8021q-trunking)
-  - [2. Inter-VLAN Routing (Router-on-a-Stick)](#2-inter-vlan-routing-router-on-a-stick)
-  - [3. DHCP Multi-Pool Server & DORA Sequence](#3-dhcp-multi-pool-server--dora-sequence)
-  - [4. Campus DNS Resolution](#4-campus-dns-resolution)
-  - [5. Edge NAT / PAT Overload](#5-edge-nat--pat-overload)
-  - [6. Network Security & Extended ACL Policies](#6-network-security--extended-acl-policies)
-- [Interactive Simulation Modules](#-interactive-simulation-modules)
-  - [Packet Journey Tracer (OSI & TCP/IP Stack)](#packet-journey-tracer-osi--tcpip-stack)
-  - [Fault-Injection Troubleshooting Lab](#fault-injection-troubleshooting-lab)
-  - [VLSM Subnet Calculator](#vlsm-subnet-calculator)
-  - [Cisco IOS Configuration Generator](#cisco-ios-configuration-generator)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation & Local Run](#installation--local-run)
-  - [Running Unit & Integration Tests](#running-unit--integration-tests)
-- [Cisco Packet Tracer Deployment Guide](#-cisco-packet-tracer-deployment-guide)
-- [Viva & Interview Q&A Quick Reference](#-viva--interview-qa-quick-reference)
-- [Contributing & License](#-contributing--license)
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Active_Development-success?style=flat-square" alt="Project Status" />
+  <img src="https://img.shields.io/badge/Network-19_Devices-blue?style=flat-square" alt="Network Devices" />
+  <img src="https://img.shields.io/badge/VLANs-5-purple?style=flat-square" alt="VLANs" />
+  <img src="https://img.shields.io/badge/Simulation-Client_Side-orange?style=flat-square" alt="Client Side Simulation" />
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="MIT License" />
+</p>
 
 ---
 
-## 📖 Overview
+## Overview
 
-In modern academic institutions, digital connectivity is mission-critical. A flat, unmanaged network suffers from excessive broadcast traffic, security vulnerabilities, lack of QoS, and difficult troubleshooting.
+**NetSim – Smart Campus Network Simulator** is an interactive, browser-based Computer Networks simulation platform designed to demonstrate how a modern college campus network operates.
 
-**NetSim** designs and simulates an enterprise-grade hierarchical campus network infrastructure:
-- **Core Layer:** Edge routing (Cisco 2911 R1) providing WAN aggregation, NAT overload, and inter-VLAN subinterfaces.
-- **Distribution Layer:** Central switching handling VLAN aggregation, redundant links, and high-speed trunking.
-- **Access Layer:** Edge switches delivering access ports to departmental labs, offices, classrooms, and wireless access points.
-- **Demilitarized / Server Zone:** Centralized servers (DHCP, DNS, Web Portal, Student DB) protected by access controls.
+The project models a complete campus network environment consisting of multiple departments, network devices, VLANs, servers, wireless clients, and an external ISP connection.
 
----
+It allows users to explore network topology, understand IP addressing, simulate DHCP and DNS operations, trace packets across network layers, test connectivity, and troubleshoot common networking problems through interactive simulations.
 
-## 🚀 Key Features
+Unlike a static network diagram, NetSim uses a deterministic JavaScript-based simulation engine to calculate network behavior according to modeled networking rules.
+
+**The entire application runs on the client side.** It does not communicate with physical Cisco devices or operate a real network. Network configurations and simulation results are maintained in browser memory and persisted using localStorage.
+
+## Key Features
 
 | Feature | Description |
-| :--- | :--- |
-| **Interactive Topology Canvas** | Dynamic SVG/Canvas network topology map rendering device statuses (healthy, degraded, down), link states, and live traffic animations. |
-| **Complete IP Addressing Plan** | Comprehensive IPv4 subnet table with CIDR notations, subnet masks, wildcards, usable host ranges, and broadcast boundaries. |
-| **VLSM Subnet Calculator** | Interactive Variable Length Subnet Masking (VLSM) tool to dynamically calculate subnets based on host capacity requirements. |
-| **VLAN & Trunk Inspector** | Visual breakdown of VLAN allocations (10, 20, 30, 40, 50), access vs trunk port configurations, 802.1Q tags, and native VLAN management. |
-| **DORA Protocol Visualizer** | Step-by-step visual sequence of the DHCP process: **Discover** (Broadcast) ➔ **Offer** (Unicast) ➔ **Request** (Broadcast) ➔ **Acknowledge** (Unicast), with lease table monitoring and APIPA fallback. |
-| **Campus DNS Resolver** | Simulated DNS server resolving internal domain names (`portal.campus.edu`, `library.campus.edu`) to respective IP addresses with live nslookup transcripts. |
-| **Packet Journey Tracer** | Trace simulated packets hop-by-hop through Layer 2 Ethernet frames, ARP lookups, Layer 3 routing tables, ACL filtering, and NAT translation. |
-| **OSI / TCP-IP Encapsulation View** | Layer-by-layer breakdown (L7 Application down to L1 Physical) showing exact headers, source/destination MACs, IPs, and port numbers. |
-| **Connectivity Diagnostic Suite** | Ping (ICMP) and service reachability simulator between any two devices with latency statistics and diagnostic outputs. |
-| **Fault-Injection Lab (9 Scenarios)** | Real-world fault scenarios (e.g., native VLAN mismatch, DHCP exhaustion, incorrect default gateway, ACL misconfiguration) with step-by-step troubleshooting and fixes. |
-| **Cisco IOS CLI Generator** | Production-ready Cisco IOS scripts for all switches and routers ready to paste directly into Cisco Packet Tracer or real hardware. |
+|---|---|
+| Interactive Dashboard | Monitor device status, active links, configuration errors, and connectivity results. |
+| Network Topology | Explore an interactive campus network with devices, connections, VLAN zones, and packet paths. |
+| IP Addressing | View IPv4 addressing plans, subnet information, and device IP allocations. |
+| VLSM Calculator | Calculate variable-length subnets based on host requirements. |
+| VLAN Configuration | Explore VLAN segmentation, access ports, trunk links, and generated configurations. |
+| DHCP Simulation | Visualize the complete Discover, Offer, Request, and Acknowledge (DORA) process. |
+| DNS Resolution | Simulate hostname resolution and inspect DNS query results. |
+| Packet Flow | Trace packet forwarding, ARP resolution, routing decisions, TTL changes, and reply paths. |
+| Connectivity Testing | Simulate ICMP, TCP, and UDP connectivity between network devices. |
+| Troubleshooting Lab | Inject, diagnose, and fix nine common networking faults. |
+| Network Security | Explore Access Control Lists (ACLs), NAT overload, and network security policies. |
+| Cisco IOS Generator | Generate educational Cisco IOS-style router and switch configurations. |
+| OSI & TCP/IP Explorer | Understand network encapsulation and the relationship between protocol layers. |
+| Simulation History | Review previously executed simulation activities. |
+| Theme Support | Switch between dark and light themes. |
+| Browser Persistence | Preserve network state and simulation history using localStorage. |
 
----
+## Campus Network Architecture
 
-## 🏛️ Campus Network Architecture
+NetSim models a hierarchical college campus network divided into separate logical network segments.
 
-### Logical VLAN & Subnet Design
+### Network Overview
 
-The campus network uses the private RFC 1918 block `10.10.0.0/16`, segmented into dedicated department subnets:
+| Component | Configuration |
+|---|---|
+| Total Devices | 19 |
+| Network Links | 18 |
+| VLAN Segments | 5 |
+| Edge Router | R1 |
+| Core Switch | CORE-SW |
+| Access Switches | CSE-SW, ADM-SW, LIB-SW |
+| Central DNS Server | SRV-CORE |
+| Library Server | SRV-LIB |
+| Wireless Access Point | AP-1 |
+| External Network | ISP-R and PUBLIC-WEB |
 
-| VLAN ID | Segment Name | Subnet Network | Subnet Mask | Usable Host Range | Default Gateway | Broadcast Address | Description |
-| :---: | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **10** | **CSE Department** | `10.10.10.0/24` | `255.255.255.0` | `10.10.10.2 - 10.10.10.254` | `10.10.10.1` | `10.10.10.255` | Computer Science labs, academic workstations |
-| **20** | **Admin Block** | `10.10.20.0/24` | `255.255.255.0` | `10.10.20.2 - 10.10.20.254` | `10.10.20.1` | `10.10.20.255` | Administration, accounts, staff & registrar |
-| **30** | **Central Library** | `10.10.30.0/24` | `255.255.255.0` | `10.10.30.2 - 10.10.30.254` | `10.10.30.1` | `10.10.30.255` | Digital library terminals, OPAC catalogs |
-| **40** | **Server Farm** | `10.10.40.0/24` | `255.255.255.0` | `10.10.40.2 - 10.10.40.254` | `10.10.40.1` | `10.10.40.255` | DNS, DHCP, Web Portal, Student DB |
-| **50** | **Campus Wi-Fi** | `10.10.50.0/24` | `255.255.255.0` | `10.10.50.2 - 10.10.50.254` | `10.10.50.1` | `10.10.50.255` | Student Wi-Fi, BYOD mobile devices (restricted) |
-| **WAN** | **Edge to ISP** | `203.0.113.0/30` | `255.255.255.252` | `203.0.113.1 - 203.0.113.2` | `203.0.113.2` | `203.0.113.3` | Point-to-point uplink to simulated Internet |
-| **INET** | **Public Web** | `198.51.100.0/24` | `255.255.255.0` | `198.51.100.2 - 198.51.100.254` | `198.51.100.1` | `198.51.100.255` | Simulated external public internet host |
+### Logical VLAN and IP Addressing Plan
 
----
+Each department has a dedicated IPv4 subnet to maintain logical network segmentation.
 
-### Hardware & Device Inventory
+| VLAN ID | Department | Network | Default Gateway |
+|:---:|---|---|---|
+| 10 | CSE | `10.10.10.0/24` | `10.10.10.1` |
+| 20 | Administration | `10.10.20.0/24` | `10.10.20.1` |
+| 30 | Library | `10.10.30.0/24` | `10.10.30.1` |
+| 40 | Server Room | `10.10.40.0/24` | `10.10.40.1` |
+| 50 | Campus Wi-Fi | `10.10.50.0/24` | `10.10.50.1` |
 
-- **Edge Router (R1 - Cisco 2911):**
-  - GigabitEthernet `G0/0`: Internal 802.1Q trunk connected to Core Switch (`G0/1`).
-  - Subinterfaces: `G0/0.10`, `G0/0.20`, `G0/0.30`, `G0/0.40`, `G0/0.50` acting as default gateways.
-  - GigabitEthernet `G0/1`: WAN uplink to ISP Router (`203.0.113.1/30`).
-- **Core Switch (SW-CORE - Cisco Catalyst 3560 / 2960):**
-  - Trunk uplinks to Edge Router and distribution/access switches.
-  - Native VLAN: 99 (management isolation).
-- **Access Switches:**
-  - `SW-CSE` (VLAN 10 access ports)
-  - `SW-ADMIN` (VLAN 20 access ports)
-  - `SW-LIB` (VLAN 30 access ports)
-  - `SW-WIFI` (VLAN 50 access ports connected to WAP)
-  - `SW-SERVER` (VLAN 40 access ports connected to Server Farm)
-- **Servers & Endpoints:**
-  - `SRV-DNS` (`10.10.40.10`) - Campus DNS Service
-  - `SRV-WEB` (`10.10.40.20`) - Student Portal & LMS
-  - `SRV-DHCP` (`10.10.40.30`) - Dynamic Host Configuration Server
-  - Departmental PCs, Admin workstations, Library computers, and Wireless client laptops.
+Each VLAN uses a `/24` subnet mask (`255.255.255.0`).
 
----
+### Network Devices
 
-## 🛠️ Core Technologies & Network Protocols
+The simulated campus network includes:
 
-### 1. VLAN Segmentation & 802.1Q Trunking
-Each department resides in its own broadcast domain. Switches tag Ethernet frames with standard IEEE 802.1Q 4-byte tags when traversing trunk links:
+- **R1:** Edge router with five 802.1Q subinterfaces and an external WAN connection.
+- **CORE-SW:** Central switch connecting the router, access switches, servers, and wireless access point.
+- **CSE-SW:** Access switch for the Computer Science department.
+- **ADM-SW:** Access switch for the Administration department.
+- **LIB-SW:** Access switch for the Library.
+- **SRV-CORE:** Central server providing DNS and HTTP services.
+- **SRV-LIB:** Library web server.
+- **AP-1:** Wireless access point with SSID `DTC-Campus`.
+- **End Devices:** Departmental PCs, laptop, and smartphone.
+- **ISP-R:** Simulated external ISP router.
+- **PUBLIC-WEB:** External web server.
+
+### Default DHCP Address Allocation
+
+| Device | IP Address |
+|---|---|
+| CSE-PC1 | `10.10.10.11` |
+| CSE-PC2 | `10.10.10.12` |
+| CSE-PC3 | `10.10.10.13` |
+| ADM-PC1 | `10.10.20.11` |
+| ADM-PC2 | `10.10.20.12` |
+| LIB-PC1 | `10.10.30.11` |
+| LIB-PC2 | `10.10.30.12` |
+| LAPTOP-1 | `10.10.50.11` |
+| PHONE-1 | `10.10.50.12` |
+
+The DHCP pools reserve addresses `.1` through `.10` for gateways and static network infrastructure.
+
+### Network Services
+
+**DHCP:** Four DHCP pools are configured for CSE, Administration, Library, and Wi-Fi segments.
+
+**DNS:** SRV-CORE (`10.10.40.10`) provides internal hostname resolution.
+
+Default DNS records:
+
+| Hostname | IP Address |
+|---|---|
+| `portal.campus.local` | `10.10.40.10` |
+| `library.campus.local` | `10.10.40.20` |
+| `dns.campus.local` | `10.10.40.10` |
+
+**NAT Overload (PAT):** Internal private addresses are translated to the router's WAN address (`203.0.113.1`) when communicating with the simulated external network.
+
+**Access Control List:** The `WIFI-IN` policy prevents Wi-Fi clients from accessing the Administration subnet while permitting other IPv4 traffic according to the configured rules.
+
+## Simulation Modules
+
+NetSim provides 12 main sections.
+
+### 1. Overview Dashboard
+
+Provides a centralized view of network health.
+
+- Total connected devices.
+- Active network links.
+- Configuration validation results.
+- Reference connectivity test.
+- Network topology preview.
+- Recent simulation activity.
+- Quick navigation to important modules.
+
+### 2. Network Topology
+
+Explore the campus network through an interactive SVG-based topology.
+
+Features:
+
+- Visual representation of routers, switches, servers, and endpoints.
+- VLAN-based network zones.
+- Color-coded network links.
+- Device status indicators.
+- Device selection and inspection.
+- Pan and zoom controls.
+- Packet path visualization and animation.
+
+### 3. IP Addressing
+
+Understand the complete IPv4 addressing plan.
+
+Features:
+
+- VLAN-wise subnet information.
+- Network and broadcast addresses.
+- Subnet masks and usable host ranges.
+- Device IP allocation.
+- Address validation and error detection.
+- Interactive VLSM calculator.
+
+### 4. VLAN Configuration
+
+Explore logical network segmentation.
+
+Features:
+
+- VLAN identification and configuration.
+- Access and trunk port inspection.
+- Allowed VLAN information.
+- Router subinterface configuration.
+- Generated Cisco IOS-style configurations.
+- Configuration copy functionality.
+
+### 5. DHCP & DNS
+
+Understand how network clients obtain IP addresses and resolve domain names.
+
+**DHCP DORA Simulation:**
+
+1. Discover
+2. Offer
+3. Request
+4. Acknowledge
+
+Additional features:
+
+- DHCP lease information.
+- DHCP pool monitoring.
+- Address release and renewal.
+- APIPA fallback simulation.
+- DNS hostname resolution.
+- DNS query transcripts and error handling.
+
+### 6. Packet Flow
+
+Visualize how packets travel between different network segments.
+
+Features:
+
+- Source and destination selection.
+- Gateway identification.
+- ARP resolution.
+- Layer 2 frame forwarding.
+- Router processing.
+- Longest Prefix Match routing.
+- TTL decrement.
+- NAT translation.
+- Request and reply path visualization.
+
+### 7. Connectivity Testing
+
+Test communication between simulated network devices.
+
+Supported protocols:
+
+- ICMP
+- TCP
+- UDP
+
+The results include packet delivery status, success percentage, routing path, gateway information, response time, and failure explanations.
+
+### 8. OSI & TCP/IP Models
+
+An interactive educational module covering:
+
+- Seven layers of the OSI model.
+- Four layers of the TCP/IP model.
+- Data encapsulation and decapsulation.
+- Protocol Data Units (PDUs).
+- Network protocols and addressing.
+- Mapping between OSI and TCP/IP layers.
+
+### 9. Troubleshooting Lab
+
+Practice identifying and resolving common networking problems.
+
+The lab provides nine fault-injection scenarios:
+
+| # | Scenario | Main Concept |
+|:---:|---|---|
+| 01 | Incorrect Default Gateway | IP Configuration |
+| 02 | Wrong Subnet Mask | Subnetting |
+| 03 | Duplicate IP Address | Address Management |
+| 04 | DHCP Server Unavailable | DHCP and APIPA |
+| 05 | Missing DNS Record | DNS Resolution |
+| 06 | Interface Disabled | Interface Management |
+| 07 | Missing Route | IP Routing |
+| 08 | Incorrect VLAN Assignment | VLAN Configuration |
+| 09 | Trunk Misconfiguration | 802.1Q Trunking |
+
+**Troubleshooting workflow:**
+
+`Select Scenario → Inject Fault → Run Diagnostics → Identify Root Cause → Apply Fix → Verify Result`
+
+The lab uses the simulated network state, allowing injected faults to affect other relevant application sections.
+
+### 10. Network Security
+
+Explore the security configuration of the campus network.
+
+Features:
+
+- Wi-Fi ACL policy inspection.
+- Permit and deny rule evaluation.
+- Source and destination testing.
+- NAT overload visualization.
+- Network segmentation.
+- Security best-practice checklist.
+- Router management hardening concepts.
+
+### 11. Documentation
+
+Provides educational resources for understanding the project.
+
+- Computer Networks viva questions.
+- Networking command references.
+- Suggested test plans.
+- Cisco IOS command explanations.
+- Network configuration guidance.
+
+### 12. About Project
+
+Explains the project's objectives, technology stack, scope, simulation boundaries, and learning outcomes.
+
+## Core Networking Concepts
+
+The simulation engine implements the following networking concepts:
+
+| Concept | Implementation |
+|---|---|
+| IPv4 Addressing | IP conversion, subnet masks, CIDR and subnet validation |
+| Subnetting | Network, broadcast, usable host range calculations |
+| VLSM | Host-based subnet allocation |
+| Layer 2 Switching | Broadcast domains, frame forwarding and ARP |
+| VLAN | Logical network segmentation |
+| IEEE 802.1Q | VLAN tagging and trunk handling |
+| Inter-VLAN Routing | Router-on-a-Stick |
+| Routing | Longest Prefix Match and static routes |
+| DHCP | DORA process and address allocation |
+| APIPA | Automatic Private IP Addressing fallback |
+| DNS | Simulated hostname resolution |
+| NAT/PAT | Network Address Translation overload |
+| ACL | Ordered access-control rule evaluation |
+| TTL | Router hop-based decrement |
+| Diagnostics | Simulated network commands and validation |
+
+## Technology Stack
+
+| Category | Technology |
+|---|---|
+| Frontend | React 19 |
+| Programming Language | JavaScript (ES6+) |
+| Build Tool | Vite 6 |
+| Styling | Tailwind CSS v4 |
+| UI Components | shadcn/ui |
+| Icons | Lucide React |
+| Routing | React Router DOM v7 |
+| State Management | React Context API |
+| Persistence | Browser localStorage |
+| Testing | Vitest |
+| Analytics | Vercel Analytics |
+
+## Architecture
+
+NetSim follows a modular three-layer architecture.
+
 ```text
-[ Ethernet Preamble ] [ Dest MAC ] [ Source MAC ] [ 802.1Q Tag (VLAN ID) ] [ EtherType ] [ Payload ] [ FCS ]
+                 USER INTERFACE
+                       |
+          React Components and Pages
+                       |
+                       v
+               STATE MANAGEMENT
+                       |
+             NetworkProvider
+              React Context
+                       |
+              localStorage
+                       |
+                       v
+              SIMULATION ENGINE
+                       |
+       +---------------+---------------+
+       |               |               |
+       v               v               v
+     IP.js           L2.js          Engine.js
+       |               |               |
+       v               v               v
+    Subnetting      Switching       Routing
+    VLSM            VLAN            NAT / ACL
+       |               |               |
+       +---------------+---------------+
+                       |
+                       v
+              NETWORK SERVICES
+                       |
+                +------+------+
+                |             |
+                v             v
+              DHCP           DNS
 ```
 
-### 2. Inter-VLAN Routing (Router-on-a-Stick)
-Instead of requiring an expensive physical router interface per VLAN, router `R1` uses subinterfaces on a single physical link (`G0/0`):
-```cisco
-interface GigabitEthernet0/0.10
- encapsulation dot1Q 10
- ip address 10.10.10.1 255.255.255.0
-!
-interface GigabitEthernet0/0.20
- encapsulation dot1Q 20
- ip address 10.10.20.1 255.255.255.0
-!
-interface GigabitEthernet0/0.30
- encapsulation dot1Q 30
- ip address 10.10.30.1 255.255.255.0
-```
+### Architecture Principles
 
-### 3. DHCP Multi-Pool Server & DORA Sequence
-The DHCP server (`10.10.40.30`) or router relay provides automated IP allocation:
-1. **Discover (DHCPDISCOVER):** Client broadcasts `0.0.0.0:68 ➔ 255.255.255.255:67`.
-2. **Offer (DHCPOFFER):** Server offers candidate IP, subnet mask, gateway, DNS, and lease time.
-3. **Request (DHCPREQUEST):** Client formally requests the offered parameters.
-4. **Acknowledge (DHCPACK):** Server commits the lease into the active binding table.
+- Separation of UI and networking logic.
+- Deterministic simulation functions.
+- Centralized application state.
+- Browser-based persistence.
+- Reusable React components.
+- Modular network engine.
+- Automated testing of core functionality.
 
-*Addresses `10.10.x.1` through `10.10.x.10` are excluded from each pool for static network infrastructure and printers.*
-
-### 4. Campus DNS Resolution
-The campus DNS server maintains internal A records:
-- `portal.campus.edu` ➔ `10.10.40.20`
-- `library.campus.edu` ➔ `10.10.30.10`
-- `dns.campus.edu` ➔ `10.10.40.10`
-
-### 5. Edge NAT / PAT Overload
-Because internal campus devices use private RFC 1918 addresses (`10.10.0.0/16`), they cannot be routed across the public Internet. Edge router `R1` executes Port Address Translation (NAT Overload):
-```cisco
-ip access-list standard NAT-PERMIT
- permit 10.10.0.0 0.0.255.255
-!
-ip nat inside source list NAT-PERMIT interface GigabitEthernet0/1 overload
-```
-Every outgoing TCP/UDP packet has its source IP replaced with `203.0.113.1` and a unique high port number assigned.
-
-### 6. Network Security & Extended ACL Policies
-Wireless networks represent untrusted traffic. An **Extended Access Control List (ACL 101)** is applied inbound on the Wi-Fi subinterface `G0/0.50`:
-```cisco
-ip access-list extended WIFI_RESTRICTIONS
- ! Permit DNS queries to Campus DNS
- permit udp 10.10.50.0 0.0.0.255 host 10.10.40.10 eq 53
- ! Permit HTTP/HTTPS access to Campus Web Portal
- permit tcp 10.10.50.0 0.0.0.255 host 10.10.40.20 eq 80
- permit tcp 10.10.50.0 0.0.0.255 host 10.10.40.20 eq 443
- ! DENY any Wi-Fi traffic into the sensitive Admin Block (VLAN 20)
- deny ip 10.10.50.0 0.0.0.255 10.10.20.0 0.0.0.255
- ! Permit all outbound Internet traffic
- permit ip 10.10.50.0 0.0.0.255 any
-```
-
----
-
-## 🔍 Interactive Simulation Modules
-
-### Packet Journey Tracer (OSI & TCP/IP Stack)
-Follow the lifecycle of an ICMP echo or HTTP GET request:
-1. **L7 Application:** Browser issues HTTP GET `http://portal.campus.edu`.
-2. **L4 Transport:** Source port 49152, Destination port 80 (TCP).
-3. **L3 Network:** ARP table check ➔ Packet routed to Default Gateway `10.10.10.1`.
-4. **L2 Data Link:** 802.1Q encapsulation with VLAN Tag 10 ➔ Trunk port.
-5. **Router Inspection:** Subinterface de-encapsulates tag, checks routing table, inspects ACL, forwards to VLAN 40 subinterface with Tag 40.
-6. **L1 Physical:** Frame delivery to destination server.
-
-### Fault-Injection Troubleshooting Lab
-Test and practice systematic network diagnostics across 9 pre-built fault scenarios:
-
-| # | Fault Scenario | Layer | Manifested Symptoms | Diagnostic Commands | Fix Action |
-| :-: | :--- | :-: | :--- | :--- | :--- |
-| **1** | **VLAN Tag Mismatch** | L2 | Switch port assigned to wrong VLAN; no gateway ping | `show vlan brief`, `show interfaces status` | Correct access VLAN assignment |
-| **2** | **Trunk Pruning Error** | L2 | Inter-switch trunk missing required VLAN in allowed list | `show interfaces trunk` | `switchport trunk allowed vlan add <id>` |
-| **3** | **Wrong Default Gateway** | L3 | Local subnet pings pass; all remote VLAN pings fail | `ipconfig /all`, `show ip route` | Configure correct subinterface gateway IP |
-| **4** | **Subinterface Down** | L3 | Total outage for an entire departmental segment | `show ip interface brief` | Bring parent and subinterface up (`no shutdown`) |
-| **5** | **DHCP Pool Exhaustion** | L7 | Clients get APIPA `169.254.x.x` addresses | `show ip dhcp binding`, `show ip dhcp pool` | Clear stale bindings or expand pool subnet mask |
-| **6** | **DNS Misconfiguration** | L7 | Ping by IP succeeds; ping by domain name fails | `nslookup portal.campus.edu` | Fix client DNS server IP or add missing DNS A-record |
-| **7** | **ACL Over-blocking** | L3/L4 | Legitimate traffic dropped silently | `show access-lists` | Reorder permit/deny statements or fix wildcard mask |
-| **8** | **Missing Default Route** | L3 | Campus communicates internally; public internet unreachable | `show ip route` | Add `ip route 0.0.0.0 0.0.0.0 203.0.113.2` on edge router |
-| **9** | **NAT Overload Missing** | L3 | External server sees private IP or traffic dropped at ISP | `show ip nat translations` | Re-enable NAT overload configuration on WAN uplink |
-
----
-
-## 💻 Tech Stack
-
-- **Frontend Core:** [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
-- **Bundler & Build Tool:** [Vite 6](https://vitejs.dev/)
-- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/), [tw-animate-css](https://github.com/)
-- **UI & Icons:** [shadcn/ui](https://ui.shadcn.com/), [Lucide React](https://lucide.dev/)
-- **Routing:** [React Router v7](https://reactrouter.com/)
-- **Testing:** [Vitest](https://vitest.dev/) (Unit & integration testing)
-- **Analytics:** `@vercel/analytics`
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```text
-smart-campus-network-design/
+NetSim-Smart-Campus-Network/
+│
 ├── components/
-│   ├── app-shell.jsx              # Navigation layout, sidebar and header
-│   ├── dashboard.jsx              # Main operations dashboard & status overview
+│   ├── app-shell.jsx
+│   ├── dashboard.jsx
 │   ├── dashboard/
-│   │   └── stat-card.jsx          # Network health indicators & metrics
-│   ├── network/
-│   │   ├── dora-sequence.jsx      # Visual animated DHCP DORA flow
-│   │   ├── link-legend.jsx        # Topology link color legend
-│   │   ├── osi-stack.jsx          # Interactive 7-layer OSI encapsulation widget
-│   │   ├── primitives.jsx         # Badges, panels, codeblocks, callouts
-│   │   ├── step-timeline.jsx      # Packet trace step-by-step timeline
-│   │   └── topology-canvas.jsx    # SVG/Canvas network topology renderer
-│   └── ui/                        # Reusable UI component library (shadcn/ui)
-├── lib/
-│   ├── nav.js                     # Section routes and metadata
-│   ├── theme.js                   # Theme management
-│   ├── utils.js                   # Utility helpers (cn, formatting)
-│   ├── visual.js                  # CLI transcript formatting (nslookup, ping)
+│   │   └── stat-card.jsx
 │   └── network/
-│       ├── default-config.js      # Campus topology, default devices & IP configs
-│       ├── engine.js              # Simulation engine (connectivity, packet routing, ACLs)
-│       ├── ios.js                 # Cisco IOS configuration generator & CLI parser
-│       ├── ip.js                  # IPv4 calculations, VLSM math, CIDR conversions
-│       ├── l2.js                  # Layer 2 switching logic, MAC tables, 802.1Q tags
-│       ├── scenarios.js           # 9 fault-injection troubleshooting scenarios
-│       ├── services.js            # Simulated DHCP server, lease pool, DNS resolution
-│       ├── show.js                # Simulated Cisco IOS show commands
-│       ├── state.js               # Reactive network state store
-│       ├── store.jsx              # React context & custom hooks for network state
-│       └── types.js               # Network data models & constants
-├── public/                        # Static brand assets, icons and favicon
+│       ├── dora-sequence.jsx
+│       ├── link-legend.jsx
+│       ├── osi-stack.jsx
+│       ├── primitives.jsx
+│       ├── step-timeline.jsx
+│       └── topology-canvas.jsx
+│
+├── lib/
+│   ├── nav.js
+│   ├── theme.js
+│   ├── utils.js
+│   ├── visual.js
+│   └── network/
+│       ├── default-config.js
+│       ├── engine.js
+│       ├── ios.js
+│       ├── ip.js
+│       ├── l2.js
+│       ├── scenarios.js
+│       ├── services.js
+│       ├── show.js
+│       ├── state.js
+│       ├── store.jsx
+│       └── types.js
+│
+├── public/
+│
 ├── src/
 │   ├── pages/
-│   │   └── section-page.jsx       # Consolidated view handler for all sections
-│   ├── App.jsx                    # Root routing configuration
-│   ├── index.css                  # Global Tailwind styles & CSS variables
-│   └── main.jsx                   # Application bootstrap entry point
+│   │   └── section-page.jsx
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+│
 ├── tests/
-│   ├── network.test.js            # Unit tests for routing, DHCP, DNS, ACL, VLSM
-│   └── visual.test.js             # Visual rendering & CLI transcript tests
-├── index.html                     # HTML template
-├── package.json                   # Project scripts and dependencies
-├── vite.config.js                 # Vite bundler configuration
-└── README.md                      # Comprehensive project documentation
+│   ├── network.test.js
+│   └── visual.test.js
+│
+├── index.html
+├── package.json
+├── vite.config.js
+├── README.md
+└── LICENSE
 ```
 
----
+## Getting Started
 
-## ⚡ Getting Started
+Follow these instructions to run the project locally.
 
 ### Prerequisites
-Make sure you have Node.js installed on your machine:
-- **Node.js**: `v18.0.0` or higher
-- **Package Manager**: `npm`, `pnpm`, or `yarn`
 
-### Installation & Local Run
+Make sure you have the following installed:
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/BabulKumar100/NetSim-Smart-Campus-Network.git
-   cd NetSim-Smart-Campus-Network
-   ```
+- Node.js 18 or later.
+- npm (Node Package Manager).
+- Git.
+- A modern web browser.
 
-2. **Install project dependencies:**
-   ```bash
-   npm install
-   # or with pnpm
-   pnpm install
-   ```
+### 1. Clone the Repository
 
-3. **Start the local development server:**
-   ```bash
-   npm run dev
-   ```
-   Open your browser and navigate to `http://localhost:5173`.
+```bash
+git clone https://github.com/BabulKumar100/NetSim-Smart-Campus-Network.git
+```
 
-4. **Build for production:**
-   ```bash
-   npm run build
-   ```
-   The compiled production assets will be output to the `dist/` folder.
+### 2. Navigate to the Project Directory
 
-5. **Preview production build:**
-   ```bash
-   npm run preview
-   ```
+```bash
+cd NetSim-Smart-Campus-Network
+```
 
-### Running Unit & Integration Tests
+### 3. Install Dependencies
 
-The project includes 34 automated unit and integration tests covering IP math, VLSM calculation, DHCP DORA cycles, DNS lookup, and ACL rule evaluation.
+```bash
+npm install
+```
+
+### 4. Start the Development Server
+
+```bash
+npm run dev
+```
+
+Open the local URL displayed in your terminal. Vite commonly uses:
+
+```text
+http://localhost:5173
+```
+
+If the configured port is different, use the URL printed by Vite.
+
+### 5. Build for Production
+
+```bash
+npm run build
+```
+
+The optimized production files are generated in the `dist/` directory.
+
+## Testing
+
+NetSim uses Vitest to test the networking engine and application utilities.
+
+Run the test suite:
 
 ```bash
 npm test
 ```
 
+The documented test suite contains 34 tests covering areas such as:
+
+- IPv4 calculations and subnetting.
+- VLSM allocation.
+- Network validation.
+- DHCP address allocation.
+- DNS resolution.
+- Packet forwarding.
+- VLAN and ARP behavior.
+- Routing and ACL evaluation.
+- NAT translation.
+- Troubleshooting scenarios.
+- Visual and CLI output helpers.
+
+## Example Simulation Scenarios
+
+Try these scenarios after starting the application.
+
+| Source | Destination | Expected Result |
+|---|---|---|
+| CSE-PC1 | SRV-CORE | PASS |
+| ADM-PC1 | LIB-PC1 | PASS |
+| LAPTOP-1 | SRV-CORE | PASS |
+| CSE-PC1 | PUBLIC-WEB | PASS |
+| LAPTOP-1 | ADM-PC1 | BLOCKED by Wi-Fi ACL |
+
+These are expected outcomes for the documented default network configuration.
+
+## Cisco Packet Tracer Integration
+
+NetSim also provides an educational Cisco IOS-style configuration generator.
+
+The generated configurations can be used as a reference when recreating the modeled topology in Cisco Packet Tracer.
+
+Suggested workflow:
+
+1. Open the VLAN Configuration section.
+2. Select a router or switch.
+3. Generate and copy its configuration.
+4. Create the corresponding devices in Cisco Packet Tracer.
+5. Adapt interface names and device-specific commands where necessary.
+6. Apply the configurations.
+7. Verify connectivity using ping and show commands.
+
+**Note:** NetSim's internal simulation and Cisco Packet Tracer are separate environments. Generated configurations should be reviewed and tested against the selected Packet Tracer device model before use. NetSim does not directly control physical routers or switches.
+
+## Simulation Boundaries
+
+NetSim is an educational network simulator, not a production network management system.
+
+- All network devices are modeled as JavaScript objects.
+- Packet transmission and routing are simulated through deterministic functions.
+- DHCP and DNS services are simulated.
+- Network configurations are stored in browser state and localStorage.
+- No physical network devices are controlled.
+- No real Ethernet frames or IP packets are transmitted.
+- Simulation results represent the implemented network model, not measurements from a real network.
+
+The external network uses documentation IP address ranges for simulation purposes.
+
+## Future Enhancements
+
+Potential improvements include:
+
+- More advanced routing protocols such as RIP, OSPF, and EIGRP.
+- Additional VLAN security policies.
+- Extended network configuration editing.
+- Advanced packet inspection and diagnostics.
+- Exportable network simulation reports.
+- More complex campus network scenarios.
+- Additional networking protocols and fault-injection exercises.
+
+## Learning Outcomes
+
+Through this project, users can develop practical understanding of:
+
+- Computer network architecture and topology.
+- IPv4 addressing and subnetting.
+- VLANs and broadcast domains.
+- Layer 2 switching and ARP.
+- Inter-VLAN routing.
+- DHCP and DNS operations.
+- NAT and access-control policies.
+- Packet forwarding and routing decisions.
+- OSI and TCP/IP models.
+- Network troubleshooting and diagnostics.
+
+## Contributing
+
+Contributions, suggestions, and bug reports are welcome.
+
+To contribute:
+
+1. Fork this repository.
+2. Create a new feature branch.
+3. Implement your changes.
+4. Run the available tests.
+5. Submit a pull request with a clear description of your changes.
+
+For major changes, consider opening an issue first to discuss the proposed implementation.
+
+## License
+
+This project is distributed under the MIT License.
+
+See the [LICENSE](LICENSE) file for more information.
+
+## Author
+
+**Babul Kumar**
+
+B.Tech Computer Science & Engineering Student
+
+- GitHub: [@BabulKumar100](https://github.com/BabulKumar100)
+- LinkedIn: [Babul Kumar](https://www.linkedin.com/in/babulkumar100)
+
 ---
 
-## 🧪 Cisco Packet Tracer Deployment Guide
-
-To deploy this exact topology inside **Cisco Packet Tracer**:
-
-1. **Place Devices:**
-   - 1x Router (Cisco 2911 or 1941) labeled `R1`
-   - 1x Core Switch (Cisco Catalyst 2960 or 3560) labeled `SW-CORE`
-   - 4x Access Switches (Cisco 2960) for `CSE`, `ADMIN`, `LIB`, `WIFI`
-   - 1x Server-PT for Central Server Farm (`DNS / DHCP / Web`)
-   - End-user PCs and Laptops connected to respective access switches.
-2. **Cabling:**
-   - Connect `R1 G0/0` to `SW-CORE G0/1` with Copper Straight-Through cable.
-   - Connect `SW-CORE` to Access Switches using Copper Straight-Through cables (Trunk ports).
-   - Connect access switch FastEthernet ports to PCs (Access ports).
-3. **Configure Devices:**
-   - Navigate to the **VLAN Configuration** or **Documentation** tab in NetSim.
-   - Select each device (`R1`, `SW-CORE`, `SW-CSE`, etc.) to copy its pre-generated Cisco IOS script.
-   - Open the device **CLI** tab in Packet Tracer, enter `enable` ➔ `configure terminal`, and paste the configuration.
-4. **Verify Connectivity:**
-   - On any client PC, set IP Configuration to **DHCP** and verify receipt of a `10.10.x.x` address.
-   - Open PC Command Prompt and ping the default gateway: `ping 10.10.10.1`.
-   - Ping between VLANs: `ping 10.10.20.10`.
-   - Open Web Browser and navigate to `http://portal.campus.edu`.
-
----
-
-## 🎓 Viva & Interview Q&A Quick Reference
-
-<details>
-<summary><b>1. Why do we segment the campus network using VLANs?</b></summary>
-VLANs divide a single physical Layer 2 switch into multiple logical broadcast domains. This isolates broadcast storms, enhances security by preventing unauthorized eavesdropping between departments, improves network performance, and simplifies management.
-</details>
-
-<details>
-<summary><b>2. What is Router-on-a-Stick and why is it used?</b></summary>
-Router-on-a-Stick is an inter-VLAN routing technique where a single physical router interface carries traffic for multiple VLANs via an 802.1Q trunk link. Subinterfaces are created on the router (e.g., <code>G0/0.10</code>), each configured with 802.1Q encapsulation and assigned the default gateway IP for that specific VLAN. This eliminates the requirement of having a separate physical router interface for every VLAN.
-</details>
-
-<details>
-<summary><b>3. Explain the DHCP DORA process.</b></summary>
-DHCP uses 4 messages:
-1. <b>Discover:</b> Client broadcasts to locate available DHCP servers.
-2. <b>Offer:</b> Server reserves an IP and unicasters/broadcasts configuration parameters to client.
-3. <b>Request:</b> Client broadcasts acceptance of the specific server's offer.
-4. <b>Acknowledge (ACK):</b> Server confirms the lease, committing the IP binding.
-</details>
-
-<details>
-<summary><b>4. Why is NAT required at the edge router?</b></summary>
-The campus network uses private IPv4 addresses (RFC 1918 <code>10.10.0.0/16</code>) which are non-routable on the public Internet. Edge router R1 performs Port Address Translation (NAT Overload/PAT), substituting private source IPs with its public IP (<code>203.0.113.1</code>) and assigning unique source ports to multiplex connections over a single public address.
-</details>
-
-<details>
-<summary><b>5. Why apply an Extended ACL specifically on the Campus Wi-Fi segment?</b></summary>
-Wi-Fi clients are inherently less trusted (guest devices, BYOD laptops, smartphones) and have a higher risk of malware or unauthorized access attempts. Applying an Extended ACL on subinterface <code>G0/0.50</code> blocks Wi-Fi clients from reaching sensitive administrative records in VLAN 20, while permitting general internet browsing and public campus portal access.
-</details>
-
-<details>
-<summary><b>6. What is the purpose of the default route <code>0.0.0.0 0.0.0.0</code> on R1?</b></summary>
-The edge router R1 only knows its directly connected subnets (VLANs 10-50 and the point-to-point link to ISP). Any packet destined for an external Internet IP address has no specific entry in R1's routing table. The default route directs all unknown destination traffic to the ISP's gateway router (<code>203.0.113.2</code>).
-</details>
-
----
-
-## 📜 Contributing & License
-
-Contributions, suggestions, and issue reports are welcome! Feel free to open an issue or submit a pull request.
-
-This project is licensed under the **MIT License**.
+<p align="center">
+  <strong>NetSim – Smart Campus Network Simulator</strong>
+  <br />
+  <em>Understand Networking. Visualize Connectivity. Master Troubleshooting.</em>
+</p>
